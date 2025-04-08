@@ -9,10 +9,13 @@
 #include "memory_pool.hpp"
 #include "register_bank.hpp"
 
+#define H_EDGE '-'
+#define V_EDGE '|'
+
 constexpr int WIDTH = 80;
 constexpr int HEIGHT = 40;
 
-enum Direction { UP, RIGHT, DOWN, LEFT };
+enum Direction { UP, RIGHT, DOWN, LEFT, ESC };
 
 
 // MEMORY ADDRESS
@@ -28,6 +31,7 @@ constexpr size_t BODY_START = 100;
 // SET CANVA IN CONSOLE
 constexpr int SCREEN_SIZE = WIDTH * HEIGHT;
 char screen[SCREEN_SIZE];
+char running = 1;
 
 // CANVA ADJUSTMENT
 void resizeConsole(int width, int height) {
@@ -62,14 +66,17 @@ void placeFruit(MemoryPool& mem) {
 }
 
 void drawBorders() {
-    for (int x = 0; x <= WIDTH; ++x) {
-        gotoxy(x, 0); std::cout << "#";
-        gotoxy(x, HEIGHT); std::cout << "#";
+    for (int i = 0; i < WIDTH; ++i) {
+        screen[0 * WIDTH + i] = H_EDGE;
+        screen[(HEIGHT - 1) * WIDTH + i] = H_EDGE;
     }
-    for (int y = 0; y <= HEIGHT; ++y) {
-        gotoxy(0, y); std::cout << "#";
-        gotoxy(WIDTH, y); std::cout << "#";
+
+    // VERTICAL EDGES
+    for (int i = 0; i < HEIGHT; ++i) {
+        screen[i * WIDTH + 0] = V_EDGE;
+        screen[i * WIDTH + (WIDTH - 1)] = V_EDGE;
     }
+
 }
 
 void input(MemoryPool& mem) {
@@ -80,6 +87,7 @@ void input(MemoryPool& mem) {
             case 'd': mem.write(DIR, RIGHT); break;
             case 's': mem.write(DIR, DOWN); break;
             case 'a': mem.write(DIR, LEFT); break;
+            case ' ': mem.write(DIR, ESC); break;
         }
     }
 }
@@ -97,6 +105,7 @@ void update(RegisterBank& regs, MemoryPool& mem) {
         case RIGHT: x++; break;
         case DOWN:  y++; break;
         case LEFT:  x--; break;
+        case ESC: running = -1; break;
     }
 
     // SAVE THE SNAKE BODY ON  MEMORY POOL
@@ -172,7 +181,7 @@ void checkFruit(MemoryPool& mem) {
 void clearScreenBuffer(char* buffer) {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
-            buffer[y * WIDTH + x] = '.';
+            buffer[y * WIDTH + x] = ' ';
         }
     }
 }
@@ -188,16 +197,7 @@ void drawBuffered(MemoryPool& mem, char* screen) {
     int length = mem.read(LENGTH);
 
     // HORIZONTAL EDGES
-    for (int i = 0; i < WIDTH; ++i) {
-        screen[0 * WIDTH + i] = '#';
-        screen[(HEIGHT - 1) * WIDTH + i] = '#';
-    }
-
-    // VERTICAL EDGES
-    for (int i = 0; i < HEIGHT; ++i) {
-        screen[i * WIDTH + 0] = '#';
-        screen[i * WIDTH + (WIDTH - 1)] = '#';
-    }
+    drawBorders();
 
     // SNACK
     screen[fy * WIDTH + fx] = 'F';
@@ -240,7 +240,9 @@ int main() {
     mem.write(LENGTH, 0);
     placeFruit(mem);
 
-    while (true) {
+
+
+    while (running > 0) {
         input(mem);
         update(regs, mem);
         if (checkCollision(mem)) break;
