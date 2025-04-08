@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <string> // Controle do console
+#include <string>
 
 #include <conio.h>
 #include <windows.h>
@@ -14,31 +14,32 @@ constexpr int HEIGHT = 40;
 
 enum Direction { UP, RIGHT, DOWN, LEFT };
 
-// Endereços na memória
+
+// MEMORY ADDRESS
 constexpr size_t POS_X = 0;
 constexpr size_t POS_Y = 4;
 constexpr size_t DIR = 8;
 constexpr size_t FRUIT_X = 12;
 constexpr size_t FRUIT_Y = 16;
 constexpr size_t LENGTH = 20;
-constexpr size_t BODY_START = 100; // pares x/y a partir daqui
+// PAIRS x/y
+constexpr size_t BODY_START = 100; 
 
-// Configura o pseudo canva no sonsole
-// constexpr int SCREEN_SIZE = (WIDTH + 1) * HEIGHT; old
+// SET CANVA IN CONSOLE
 constexpr int SCREEN_SIZE = WIDTH * HEIGHT;
 char screen[SCREEN_SIZE];
 
-// Canva ajustment
+// CANVA ADJUSTMENT
 void resizeConsole(int width, int height) {
     HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    // Define o tamanho do buffer de tela (sem scroll)
+    // SETS THE SIZE OF THE SCREEN BUFFER (NO SCROLL)
     COORD newSize;
     newSize.X = width;
     newSize.Y = height;
     SetConsoleScreenBufferSize(hOut, newSize);
 
-    // Define o tamanho da janela
+    // SETS THE SCREEN SIZE
     SMALL_RECT displayArea = {
         0, 0,
         static_cast<SHORT>(width - 1),
@@ -54,10 +55,8 @@ void gotoxy(int x, int y) {
 }
 
 void placeFruit(MemoryPool& mem) {
-    // int fx = rand() % WIDTH;
-    // int fy = rand() % HEIGHT;
-    int fx = 1 + rand() % (WIDTH - 2);  // de 1 até WIDTH - 2
-    int fy = 1 + rand() % (HEIGHT - 2); // de 1 até HEIGHT - 2
+    int fx = 1 + rand() % (WIDTH - 2);
+    int fy = 1 + rand() % (HEIGHT - 2);
     mem.write(FRUIT_X, fx);
     mem.write(FRUIT_Y, fy);
 }
@@ -100,7 +99,7 @@ void update(RegisterBank& regs, MemoryPool& mem) {
         case LEFT:  x--; break;
     }
 
-    // salvar corpo atual no pool
+    // SAVE THE SNAKE BODY ON  MEMORY POOL
     int length = mem.read(LENGTH);
     for (int i = length; i > 0; --i) {
         int prev_x = mem.read(BODY_START + (i - 1) * 8);
@@ -125,13 +124,13 @@ void draw(MemoryPool& mem) {
     system("cls");
     drawBorders();
 
-    // desenha fruta
+    // DRAW SNACK
     gotoxy(fx, fy); std::cout << "F";
 
-    // desenha cabeça
+    // DRAW HEAD
     gotoxy(x, y); std::cout << "O";
 
-    // desenha corpo
+    // DRAW BODY
     for (int i = 0; i < length; ++i) {
         int bx = mem.read(BODY_START + i * 8);
         int by = mem.read(BODY_START + i * 8 + 4);
@@ -169,7 +168,7 @@ void checkFruit(MemoryPool& mem) {
     }
 }
 
-// Gerencia o canva no console
+// CLEAR THE BUFFER SCREEN
 void clearScreenBuffer(char* buffer) {
     for (int y = 0; y < HEIGHT; ++y) {
         for (int x = 0; x < WIDTH; ++x) {
@@ -178,7 +177,7 @@ void clearScreenBuffer(char* buffer) {
     }
 }
 
-// Draw convas
+// DRAW CANVAS
 void drawBuffered(MemoryPool& mem, char* screen) {
     clearScreenBuffer(screen);
 
@@ -188,32 +187,32 @@ void drawBuffered(MemoryPool& mem, char* screen) {
     int fy = mem.read(FRUIT_Y);
     int length = mem.read(LENGTH);
 
-    // bordas horizontais
+    // HORIZONTAL EDGES
     for (int i = 0; i < WIDTH; ++i) {
         screen[0 * WIDTH + i] = '#';
         screen[(HEIGHT - 1) * WIDTH + i] = '#';
     }
 
-    // bordas verticais
+    // VERTICAL EDGES
     for (int i = 0; i < HEIGHT; ++i) {
         screen[i * WIDTH + 0] = '#';
         screen[i * WIDTH + (WIDTH - 1)] = '#';
     }
 
-    // fruta
+    // SNACK
     screen[fy * WIDTH + fx] = 'F';
 
-    // cabeça da cobra
+    // HEAD SNAKE
     screen[y * WIDTH + x] = 'O';
 
-    // corpo da cobra
+    // BODY SNAKE
     for (int i = 0; i < length; ++i) {
         int bx = mem.read(BODY_START + i * 8);
         int by = mem.read(BODY_START + i * 8 + 4);
         screen[by * WIDTH + bx] = 'o';
     }
 
-    // desenha tudo de uma vez
+    // DRAW ALL
     DWORD charsWritten;
     COORD coord = {0, 0};
     WriteConsoleOutputCharacterA(
