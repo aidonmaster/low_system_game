@@ -1,0 +1,13 @@
+# Pastas locais do VSCode
+.vscode/
+testes/
+
+# Arquivos compilados
+*.exe
+
+# Outros comuns (opcional)
+*.obj
+*.o
+*.log
+*.dll
+*.out
