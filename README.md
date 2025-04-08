@@ -1,2 +1,2 @@
-# low_system_game
+# Low System Snake Game
 A snake game simulating low-level system, using a man-pool and pseudo registers
