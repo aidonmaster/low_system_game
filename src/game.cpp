@@ -12,8 +12,8 @@
 #define H_EDGE '-'
 #define V_EDGE '|'
 
-constexpr int WIDTH = 80;
-constexpr int HEIGHT = 40;
+constexpr int WIDTH = 20;
+constexpr int HEIGHT = 20;
 
 enum Direction { UP, RIGHT, DOWN, LEFT, ESC };
 
@@ -34,8 +34,8 @@ char screen[SCREEN_SIZE];
 char running = 1;
 
 // CANVA ADJUSTMENT
-void resizeConsole(int width, int height) {
-    HANDLE hOut = GetStdHandle(STD_OUTPUT_HANDLE);
+void resizeConsole(int width, int height){
+    HANDLE hOut = GetStdHandle( STD_OUTPUT_HANDLE );
 
     // SETS THE SIZE OF THE SCREEN BUFFER (NO SCROLL)
     COORD newSize;
@@ -227,7 +227,7 @@ void drawBuffered(MemoryPool& mem, char* screen) {
 
 int main() {
     
-    srand(static_cast<unsigned int>(time(nullptr))); // <--- aqui!
+    srand( static_cast<unsigned int>( time(nullptr) ) ); 
 
     resizeConsole(WIDTH, HEIGHT);
 
