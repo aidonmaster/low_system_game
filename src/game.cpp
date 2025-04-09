@@ -12,7 +12,7 @@
 #define H_EDGE '-'
 #define V_EDGE '|'
 
-constexpr int WIDTH = 20;
+constexpr int WIDTH = 40;
 constexpr int HEIGHT = 20;
 
 enum Direction { UP, RIGHT, DOWN, LEFT, ESC };
