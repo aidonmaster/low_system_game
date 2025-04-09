@@ -1,4 +1,4 @@
-# 🐍 low_system_game
+# 🐍 Low System Snake Game
 
 A Snake-style game written in C++, running directly in the terminal and simulating a low-level system with manual memory allocation, pseudo registers, and ANSI escape-based rendering.
 
@@ -27,7 +27,6 @@ All of that while enjoying the classic **Snake** game!
 |`D`|Move Right|
 |`Q`|Quit Game|
 
-> Terminal must be in raw mode for real-time input to work correctly.
 
 ## 🧰 Building
 
@@ -39,31 +38,18 @@ Requirements:
 
 bash
 
-CopiarEditar
-
-`make ./low_system_game`
 
 ## ⚠️ Note
 
 > After exiting the game, if your terminal appears "glitched" (e.g., overlapping text or invisible input), run `reset` or press `Ctrl+L` to clear it.  
 > We're working on automatic terminal state restoration.
 
-## 📂 Project Structure
 
-bash
+## 🛠️ Upcoming improvements
 
-CopiarEditar
-
-`low_system_game/ ├── src/               # Source code ├── Makefile           # Build script ├── README.md          # This file └── LICENSE            # MIT License`
-
-## 🛠️ Work in Progress
-
--  Restore terminal state automatically
-    
--  Add scoring system and HUD using pseudo-registers
-    
--  Add obstacles or power-ups
-    
+-  Restore terminal state automatically    
+-  Add scoring system and HUD using pseudo-registers    
+-  Add obstacles or power-ups    
 -  Pause functionality
     
 
