@@ -2,12 +2,12 @@
 
 A Snake-style game written in C++, running directly in the terminal and simulating a low-level system with manual memory allocation, pseudo registers, and ANSI escape-based rendering.
 
-## 🧠 Concept
+## Concept
 
 This project simulates a low-resource system environment — perfect for studying memory management, terminal I/O, and control structures in a near bare-metal style.  
 All of that while enjoying the classic **Snake** game!
 
-## 🚀 Features
+## Features
 
 - Simulated **memory pool** for managing snake and object allocations    
 - **Pseudo-registers** for storing game state and movement    
@@ -17,7 +17,7 @@ All of that while enjoying the classic **Snake** game!
 - No external graphics libraries — just your terminal!
     
 
-## 🕹️ Controls
+## Controls
 
 |Key|Action|
 |---|---|
@@ -28,7 +28,7 @@ All of that while enjoying the classic **Snake** game!
 |`Q`|Quit Game|
 
 
-## 🧰 Building
+## Building
 
 Requirements:
 
@@ -36,13 +36,13 @@ Requirements:
 - [Make](https://makefiletutorial.com/#getting-started) or mingw32-make ( [mingw](https://www.mingw-w64.org/) compiler on windows )
     
 
-## ⚠️ Note
+## Note
 
 > After exiting the game, if your terminal appears "glitched" (e.g., overlapping text or invisible input), run `reset` or press `Ctrl+L` to clear it.  
 > We're working on automatic terminal state restoration.
 
 
-## 🛠️ Upcoming improvements
+## Upcoming improvements
 
 -  Restore terminal state automatically    
 -  Add scoring system and HUD using pseudo-registers    
