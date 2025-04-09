@@ -87,7 +87,7 @@ void input(MemoryPool& mem) {
             case 'd': mem.write(DIR, RIGHT); break;
             case 's': mem.write(DIR, DOWN); break;
             case 'a': mem.write(DIR, LEFT); break;
-            case ' ': mem.write(DIR, ESC); break;
+            case 'q': mem.write(DIR, ESC); break;
         }
     }
 }
