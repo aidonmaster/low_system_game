@@ -32,12 +32,9 @@ All of that while enjoying the classic **Snake** game!
 
 Requirements:
 
-- C++ compiler (e.g. g++)    
-- Make
+- C++ compiler (e.g. g++)   
+- [Make](https://makefiletutorial.com/#getting-started) or mingw32-make ( [mingw](https://www.mingw-w64.org/) compiler on windows )
     
-
-bash
-
 
 ## ⚠️ Note
 
