@@ -52,6 +52,6 @@ Requirements:
 
 ## 📜 License
 
-MIT © [aidonmaster](https://github.com/aidonmaster)
+MIT © [aidonmaster](https://github.com/aidonmaster/low_system_game/blob/main/LICENSE)
 
 ---
